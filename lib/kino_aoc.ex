@@ -41,7 +41,7 @@ defmodule KinoAOC do
 
     case result do
       {:ok, {{_version, 200, _reason_phrase}, _headers, body}} -> String.trim_trailing(List.to_string(body), "\n")
-      {:ok, {{_version, status, _reason_phrase}, _headers, body }} -> raise Integer.to_string(status) <> " " <> List.to_string(reason_phrase) <> ": " <> List.to_string(body)
+      {:ok, {{_version, status, reason_phrase}, _headers, body }} -> raise Integer.to_string(status) <> " " <> List.to_string(reason_phrase) <> ": " <> List.to_string(body)
     end
   end
 end
