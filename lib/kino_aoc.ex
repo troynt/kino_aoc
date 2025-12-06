@@ -29,14 +29,20 @@ defmodule KinoAOC do
   """
 
   def download_puzzle(year, day, session) do
-    {:ok, res} =
-      Req.get("https://adventofcode.com/#{year}/day/#{day}/input",
-        headers: [{"cookie", "session=#{session}"}]
-      )
+    :inets.start()
+    :ssl.start()
 
-    case res.status do
-      200 -> {:ok, String.trim_trailing(res.body, "\n")}
-      _ -> raise "\nStatus: #{inspect(res.status)}\nError: #{inspect(String.trim(res.body))}"
+    url = "https://adventofcode.com/#{year}/day/#{day}/input"
+    req_headers = [
+      {~c"cookie", ~c"session=#{session}"}
+    ]
+
+    result = :httpc.request(:get, {url, req_headers}, [], [])
+
+    case result do
+      {:ok, {{_version, 200, _reason_phrase}, _headers, body}} -> {:ok, String.trim_trailing(List.to_string(body), "\n") }
+      {:ok, {{_version, status, reason_phrase}, _headers, body }} -> raise Integer.to_string(status) <> " " <> List.to_string(reason_phrase) <> ": " <> List.to_string(body)
+      { :error, err } -> raise "Error: #{inspect(String.trim(err))}"
     end
   end
 end
