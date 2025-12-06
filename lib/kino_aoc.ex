@@ -44,7 +44,5 @@ defmodule KinoAOC do
       {:ok, {{_version, status, reason_phrase}, _headers, body }} -> raise Integer.to_string(status) <> " " <> List.to_string(reason_phrase) <> ": " <> List.to_string(body)
       { :error, err } -> raise "Error: #{inspect(String.trim(err))}"
     end
-
-    {:ok, "blah"}
   end
 end
