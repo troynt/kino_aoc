@@ -35,7 +35,6 @@ defmodule KinoAOC.MixProject do
   defp deps do
     [
       {:kino, "~> 0.9"},
-      {:req, "~> 0.4"},
       # docs
       {:ex_doc, "~> 0.30", only: :dev, runtime: false}
     ]
