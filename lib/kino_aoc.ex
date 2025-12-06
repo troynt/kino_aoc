@@ -40,8 +40,9 @@ defmodule KinoAOC do
     result = :httpc.request(:get, {url, req_headers}, [], [])
 
     case result do
-      {:ok, {{_version, 200, _reason_phrase}, _headers, body}} -> String.trim_trailing(List.to_string(body), "\n")
+      {:ok, {{_version, 200, _reason_phrase}, _headers, body}} -> {:ok, String.trim_trailing(List.to_string(body), "\n") }
       {:ok, {{_version, status, reason_phrase}, _headers, body }} -> raise Integer.to_string(status) <> " " <> List.to_string(reason_phrase) <> ": " <> List.to_string(body)
+      { :error, err } -> raise "Error: #{inspect(String.trim(error))}"
     end
   end
 end
